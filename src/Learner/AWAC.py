@@ -41,12 +41,12 @@ class AWAC(nn.Module):
         dist = Categorical(logits=logits)
         return dist.sample(sample_shape=[num_samples]).T
 
-    def update_critic(self, state, action, reward, next_states, dones):
+    def update_critic(self, state, action, reward, next_states, terms, truns):
         with torch.no_grad():
             qs = self.critic_target(next_states)  # [minibatch size x #.actions]
             sampled_as = self.get_action(next_states, self.num_action_samples)  # [ minibatch size x #. action samples]
             mean_qsa = qs.gather(1, sampled_as).mean(dim=-1, keepdims=True)  # [minibatch size x 1]
-            q_target = reward + self.gamma * mean_qsa * (1 - dones)
+            q_target = reward + self.gamma * mean_qsa * (1 - terms - truns)
 
         q_val = self.critic(state).gather(1, action)
         loss = F.mse_loss(q_val, q_target)
