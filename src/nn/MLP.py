@@ -1,5 +1,5 @@
 import torch.nn as nn
-
+import torch
 
 class MLP(nn.Module):
 
@@ -33,3 +33,20 @@ class MLP(nn.Module):
         for layer in self.layers:
             xs = layer(xs)
         return xs
+
+
+class FNetwork(nn.Module):
+    def __init__(self, state_dim, action_dim, hidden_sizes=(256, 256)):
+        super(FNetwork, self).__init__()
+        self.net = nn.Sequential(
+            nn.Linear(state_dim + action_dim, hidden_sizes[0]),
+            nn.ReLU(),
+            nn.Linear(hidden_sizes[0], hidden_sizes[1]),
+            nn.ReLU(),
+            nn.Linear(hidden_sizes[1], 1)  # Output a scalar value
+        )
+
+    def forward(self, state, action):
+        # Concatenate state and action along the feature dimension
+        x = torch.cat([state, action], dim=-1)
+        return self.net(x)
