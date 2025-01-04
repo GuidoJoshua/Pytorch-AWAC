@@ -34,6 +34,29 @@ class MLP(nn.Module):
             xs = layer(xs)
         return xs
 
+class EnsembleNetwork(nn.Module):
+    def __init__(self, state_dim, action_dim, num_neurons, out_act="ReLU", num_critics=5, lam=0.9):
+        super(EnsembleNetwork, self).__init__()
+        self.nets = nn.ModuleList([
+            MLP(state_dim, action_dim, num_neurons) for _ in range(num_critics)
+        ])
+        self.lam = lam
+    
+    def min_value(self, state):
+        values_list = [mlp(state) for mlp in self.nets]
+        values_list = torch.stack(values_list, dim=0)
+        return torch.min(values_list, dim=0).values
+    
+    def max_value(self, state):
+        values_list = [mlp(state) for mlp in self.nets]
+        values_list = torch.stack(values_list, dim=0)
+        return torch.max(values_list, dim=0).values
+    
+    def forward(self, state):
+        min_value = self.min_value(state)
+        max_value = self.max_value(state)
+        return self.lam * min_value + (1 - self.lam) * max_value
+    
 
 class FNetwork(nn.Module):
     def __init__(self, state_dim, action_dim, hidden_sizes=(256, 256)):
