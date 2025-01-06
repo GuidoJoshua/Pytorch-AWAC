@@ -11,7 +11,7 @@ You can find the running example of `WAC` on `gym` `cartpole-v2` environment fro
 
 ## Experiment Results
 
-It is confirmed that `AWAC` can learn better policy than its behavior policy in offline mode.
+It is confirmed that `WAC` can learn better policy than its behavior policy in offline mode.
 
 ### Offline dataset preparation
 - Prepare the offline dataset by using a good enough DQN (well trained but with a 40% chance act randomly)
