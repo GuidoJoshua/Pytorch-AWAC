@@ -48,4 +48,4 @@ It is confirmed that `AWAC` can learn better policy than its behavior policy in 
   the samples from replay memory would contain some amount of distributional shift.
 
 ### video
-![video](./images/WAC.mp4)
+![video](./images/WAC.gif)
