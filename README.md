@@ -7,7 +7,7 @@
 - matplotlib
 
 ## Examples
-You can find the running example of `WAC` on `gym` `cartpole-v2` environment from `AWAC-example.ipynb`.
+You can find the running example of `WAC` on `gym` `cartpole-v2` environment from `WAC-cartpole-v2.ipynb`.
 
 ## Experiment Results
 
@@ -24,22 +24,22 @@ It is confirmed that `WAC` can learn better policy than its behavior policy in o
 
 ### Offline training
 
-- After training 8000 gradient steps with 1024 sized mini-batch, `AWAC` was able to learn
+- After training 8000 gradient steps with 1024 sized mini-batch, `WAC` was able to learn
   a policy better than the one of `good enough DQN`.
 
 ![offline AWAC](./images/offline-WAC.png)
 
 - The blue distribution shows the performance distribution of the `good enough DQN`.
-- The orange distribution shows the performance distribution of the offline trained `AWAC`.
+- The orange distribution shows the performance distribution of the offline trained `WAC`.
 
 ### Online finetuning
 
-- After `AWAC` trained on 600 episode amount of online training,
-  `AWAC` shows even better control performance. (offline trained `AWAC` + 600 ep online training)
+- After `WAC` trained on 600 episode amount of online training,
+  `WAC` shows even better control performance. (offline trained `WAC` + 600 ep online training)
 
 ![offline AWAC](./images/online-tuning.png)
 
-- Moreover, the `AWAC` didn't show the 'dip', a phenomenon that indicates sudden performance drop right after online training
+- Moreover, the `WAC` didn't show the 'dip', a phenomenon that indicates sudden performance drop right after online training
 
 ![offline AWAC](./images/rewards.png)
 
